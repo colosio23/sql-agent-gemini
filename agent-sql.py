@@ -17,6 +17,13 @@ from langgraph.checkpoint.memory import MemorySaver
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
 
+# Si está en Streamlit Cloud, usar secrets
+if "GOOGLE_API_KEY" not in os.environ:
+    try:
+        os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+    except:
+        pass
+
 def clean_text(text):
     """Clean text removing thinking tags"""
     # Si el texto es una lista o no es string, convertirlo
